@@ -22,14 +22,7 @@ namespace BreakdownMonitor.Server.Controllers {
         // GET: Breakdowns
         [HttpGet]
         public async Task<IActionResult> GetBreakdowns() {
-            return Ok(await _context.Breakdowns.Select(x => new breakdownDTO {
-                Id = x.Id,
-                BreakdownReference = x.BreakdownReference,
-                CompanyName = x.CompanyName,
-                DriverName = x.DriverName,
-                RegistrationNumber = x.RegistrationNumber,
-                BreakdownDate = x.BreakdownDate.ToString()
-            }).ToListAsync());
+            return Ok(await _context.Breakdowns.ToListAsync());
         }
 
         // GET: Breakdowns/Details/5
@@ -47,7 +40,7 @@ namespace BreakdownMonitor.Server.Controllers {
 
         // POST: Breakdowns/Create
         [HttpPost]
-        public async Task<IActionResult> CreateBreakdown(breakdownDTO breakdown) {
+        public async Task<IActionResult> CreateBreakdown(Breakdown breakdown) {
             if (breakdown == null) {
                 BadRequest();
             }
@@ -59,7 +52,7 @@ namespace BreakdownMonitor.Server.Controllers {
 
         // Put: Breakdowns/update
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBreakdown(Guid id, breakdownDTO breakdown) {
+        public async Task<IActionResult> UpdateBreakdown(Guid id, Breakdown breakdown) {
             try {
                 if(id != breakdown.BreakdownReference) {
                     return BadRequest();
